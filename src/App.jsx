@@ -1,16 +1,31 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0);
+// 产品目录行
+function ProductCategoryRow({ categoryName }) {
   return (
-    <>
-      <h1>Hello World</h1>
-      <h2>{count}</h2>
-      <button type="button" onClick={() => setCount(count + 1)}>
-        尝试
-      </button>
-    </>
+    <tr>
+      <th colSpan="2">{categoryName}</th>
+    </tr>
   );
 }
 
-export default App;
+// 产品行
+function ProductRow({ product }) {
+  const prizeName = product.stocked ? product.name : <span style="color: red">{product.name}</span>;
+  const prizePrice = product.price;
+  return (
+    <tr>
+      <td>{prizeName}</td>
+      <td>{product.price}</td>
+    </tr>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <ProductCategoryRow />
+      <ProductRow />
+    </>
+  );
+}
