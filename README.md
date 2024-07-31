@@ -65,4 +65,3 @@ vite-pure-template
 - postcss: autoprefixer/cssnano
 
 - unplugin-auto-import
-

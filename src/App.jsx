@@ -50,15 +50,25 @@ function ProductTable({ products }) {
 }
 
 // 搜索过滤栏
-function SearchBar() {
+function SearchBar({ filterText, inStockOnly, onFilterTextChange, onInStockOnlyChange }) {
   return (
     <form>
       <div>
-        <input type="text" placeholder="Search..." />
+        <input
+          type="text"
+          value={filterText}
+          placeholder="Search..."
+          onChange={(e) => onFilterTextChange(e.target.value)}
+        />
       </div>
       <div>
-        <label for="stockCheckbox">
-          <input type="checkbox" id="stockCheckbox" />
+        <label>
+          <input
+            type="checkbox"
+            id="stockCheckbox"
+            value={inStockOnly}
+            onChange={(e) => onInStockOnlyChange(e.target.checked)}
+          />
           Only show products in stock
         </label>
       </div>
@@ -68,10 +78,23 @@ function SearchBar() {
 
 // 可过滤的产品表格
 function FilterableProductTable({ products }) {
+  const [filterText, setFilterText] = useState("");
+  const [inStockOnly, setInStockOnly] = useState(false);
+
+  const filterProducts = products.filter((product) => {
+    if (product.name.indexOf(filterText) === -1) return false;
+    if (inStockOnly && product.stocked === inStockOnly) return false;
+    return true;
+  });
   return (
     <>
-      <SearchBar></SearchBar>
-      <ProductTable products={products}></ProductTable>
+      <SearchBar
+        filterText={filterText}
+        inStockOnly={inStockOnly}
+        onFilterTextChange={setFilterText}
+        onInStockOnlyChange={setInStockOnly}
+      ></SearchBar>
+      <ProductTable products={filterProducts}></ProductTable>
     </>
   );
 }
