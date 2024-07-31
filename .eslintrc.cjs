@@ -1,9 +1,9 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: "@babel/eslint-parser",
     ecmaVersion: 2019,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
       globalReturn: false,
       impliedStrict: true,
@@ -19,9 +19,9 @@ module.exports = {
     es6: true,
     jquery: true,
   },
-  extends: ['eslint:recommended', 'react-app', 'plugin:prettier/recommended'],
+  extends: ["eslint:recommended", "react-app", "plugin:prettier/recommended"],
   rules: {
-    'prettier/prettier': 'warn',
-    'no-unused-vars': 'off',
+    "prettier/prettier": "warn",
+    "no-unused-vars": "off",
   },
 };
