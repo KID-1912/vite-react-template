@@ -1,14 +1,17 @@
-import path from "node:path";
+import path from "path";
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import WindiCSS from "vite-plugin-windicss";
 import eslint from "vite-plugin-eslint";
 import legacy from "vite-plugin-legacy-swc";
 import AutoImport from "unplugin-auto-import/vite";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import svgr from "vite-plugin-svgr";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { visualizer } from "rollup-plugin-visualizer";
 
-export default defineConfig(({ command, mode }) => {
+export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     base: env.VITE_BASE_URL,
@@ -21,16 +24,34 @@ export default defineConfig(({ command, mode }) => {
     css: {
       preprocessorOptions: {
         less: {},
-        scss: {
-          additionalData: "",
-        },
+        scss: { additionalData: "" },
       },
     },
     plugins: [
       react(),
       AutoImport({
-        imports: [],
+        imports: [
+          "react",
+          "react-router-dom",
+          { react: ["Suspense", "createContext"] },
+          { antd: ["App", "Button", "Form", "Input", "Select", "Flex", "Modal"] },
+        ],
+        resolvers: [
+          IconsResolver({
+            prefix: false,
+            enabledCollections: ["ant-design"],
+            alias: { antd: "ant-design" },
+            extension: "jsx",
+          }),
+        ],
+        eslintrc: {
+          enabled: true,
+          filepath: "./eslintrc-auto-import.json",
+        },
+        dts: "auto-imports.d.ts",
       }),
+      Icons({ autoInstall: false, compiler: "jsx" }),
+      svgr(),
       WindiCSS(),
       eslint(),
       legacy(),
@@ -39,12 +60,14 @@ export default defineConfig(({ command, mode }) => {
           data: { build_time: new Date().toLocaleString() },
         },
       }),
-      visualizer({ open: true, filename: "dist/stats.html" }),
+      visualizer({ open: false, filename: "dist/stats.html" }),
     ],
     server: {
       host: true,
       port: 5173,
-      proxy: env.VITE_API_BASE_URL,
+      proxy: {
+        "/": env.VITE_API_BASE_URL,
+      },
     },
     build: {
       outDir: "dist",
@@ -56,15 +79,11 @@ export default defineConfig(({ command, mode }) => {
           entryFileNames: "js/[name]-[hash].js",
           assetFileNames: "[ext]/[name]-[hash].[ext]",
         },
-        manualChunks(id) {
-          if (id.includes("node_modules")) {
-            return id
-              .toString()
-              .split("node_modules/")[1]
-              .split("/")[0]
-              .toString();
-          }
-        },
+        // manualChunks(id) {
+        //   if (id.includes("node_modules")) {
+        //     return id.toString().split("node_modules/")[1].split("/")[0].toString();
+        //   }
+        // },
       },
     },
     reportCompressedSize: false, // gzip 压缩大小报告

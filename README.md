@@ -13,29 +13,35 @@ vite-pure-template
 ├─public
 ├─src
 |  ├─assets
-|  |   ├─styles
-|  |   ├─images
+|  |   ├─style
+|  |   ├─image
+|  |   ├─svg
 |  ├─components
+|  ├─context
+|  ├─hooks
 |  ├─layouts
-|  ├─middleware
-|  ├─modules
 |  ├─pages
-|  ├─plugins
-|  ├─App.js
-|  ├─main.js
+|  ├─router
+|  ├─types
+|  ├─utils
+|  ├─App.tsx
+|  ├─main.tsx
 ├─.env
 ├─.env.development
 ├─.env.production
 ├─.eslintrc.cjs
 ├─.gitignore
-├─.prettier.js
+├─.prettierrc.cjs
+├─auto-imports.d.ts
+├─eslintrc-auto-import.json
 ├─index.html
 ├─package-lock.json
 ├─package.json
 ├─postcss.config.js
 ├─README.md
-├─vite.config.js
-├─windi.config.js
+├─tsconfig.json
+├─vite.config.ts
+├─windi.config.ts
 ```
 
 ## 集成特性
@@ -52,11 +58,11 @@ vite-pure-template
 
 - vite-plugin-legacy-swc
 
-- eslint：@babel/eslint-parser、vite-plugin-eslint、eslint-config-react-app
+- eslint：@typescript-eslint/parser、vite-plugin-eslint、@typescript-eslint/eslint-plugin
 
-- prettier：eslint-config-prettier、eslint-config-react-app、eslint-plugin-prettier
+- prettier：eslint-config-prettier、eslint-plugin-prettier
 
-- [vite-svg-loader]
+- vite-plugin-svgr
 
 - windicss
 
@@ -64,4 +70,6 @@ vite-pure-template
 
 - postcss: autoprefixer/cssnano
 
-- unplugin-auto-import
+- unplugin-auto-import/unplugin-icons
+
+- antd

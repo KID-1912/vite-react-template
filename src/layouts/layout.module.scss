@@ -1,0 +1,18 @@
+@use "@/assets/style/variable.scss" as *;
+
+.layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fafafa;
+  overflow: auto;
+}
+
+.layout-header {
+  width: 100%;
+  height: 44px;
+}
+
+.layout-main {
+  flex: 1;
+}
