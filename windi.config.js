@@ -7,7 +7,7 @@ export default defineConfig({
   },
   plugins: [LineClamp],
   extract: {
-    include: ["**/*.{vue,html,jsx,.tsx}"],
+    include: ["**/*.{html,jsx,tsx}"],
     exclude: ["node_modules", ".git", "dist"],
   },
 });
